@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abhinav Tripathi</title>
+<meta name="description" content="Fractional CTO and systems architect. 20+ years from silicon to cloud — automotive ECUs and lunar flight software to fulfilment and payments at national scale.">
+<meta property="og:title" content="Abhinav Tripathi — Fractional CTO &amp; Systems Architect">
+<meta property="og:description" content="Fractional CTO and systems architect. 20+ years from silicon to cloud — automotive ECUs and lunar flight software to fulfilment and payments at national scale.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap">
+
+
+  <header>
+    <h1>Abhinav Tripathi</h1>
+    <p class="role">Fractional CTO &amp; Systems Architect</p>
+    <p class="lede">20+ years going from precision to precision at scale.</p>
+  </header>
+
+<p>The first half of my career was silicon — automotive ECUs built to MISRA and ISO 7637, engine control for a defence vehicle prototype, Class 2B medical devices, and an open-source build system Carnegie Mellon adopted for their Iris lunar rover’s flight control build.</p>
+<p>The second half was scale — fulfilment for one of India’s largest e-pharmacies, 10,000+ warehouse robots running 24×7 across three continents, B2B payment rails settling T+0 with statutory deductions at source.</p>
+<p>Companies bring me in when technology has become the constraint: the platform won’t scale, the burn won’t come down, delivery keeps slipping, or diligence has flagged the architecture. I’ve built two companies and led engineering in four more, so I’ve usually met the failure mode before — and I work at whatever depth it takes, from the board conversation to the critical-path bug.</p>
+<h2 id="what-im-brought-in-to-do">What I’m brought in to do</h2>
+<ul>
+<li><strong>Fractional CTO leadership.</strong> Technology strategy, org design, engineering leadership, governance, and being the technical voice in the room when the board needs one.</li>
+<li><strong>Systems &amp; platform architecture.</strong> Complex SaaS, enterprise workflows, data platforms, fintech and payments integration, edge-to-cloud ecosystems.</li>
+<li><strong>Capital efficiency &amp; AI adoption.</strong> Moving engineering teams onto AI-native workflows, restructuring infrastructure economics, refactoring legacy architecture so it stops taxing every release.</li>
+<li><strong>Technical due diligence.</strong> For investors who need an honest read on whether an architecture, a team or a roadmap survives the next stage.</li>
+</ul>
+<h2 id="selected-work">Selected work</h2>
+<section id="a-build-system-that-flew-on-a-lunar-mission" class="story">
+<h3>A build system that flew on a lunar mission</h3>
+<p>A warehouse robot needed a real-time kernel on a TI AM335x. AWS FreeRTOS had no working port for that chip with the TI interrupt controller, so I wrote one, along with the build system around it, and put both in the open. In 2021–22 Carnegie Mellon adopted the build system for the flight control build of their Iris lunar rover, which flew on Astrobotic’s Peregrine Mission One in January 2024. Both are in GitHub’s Arctic Code Vault. — <a href="https://github.com/kryochronic/c_source_tools">c_source_tools</a></p>
+</section>
+<section id="the-counterfeit-transmitters" class="story">
+<h3>The counterfeit transmitters</h3>
+<p>A hardware company’s device authentication had weak entropy and had been broken. Cloned transmitters were pairing with genuine receivers, and every clone was revenue that never arrived. I replaced it: encryption-as-a-service in the cloud, custom cryptographic JWTs, keys generated on dedicated hardware at the point of manufacture, and a three-way handshake binding server, mobile app and firmware. The fix reached back into the factory, which meant coordinating five teams that don’t normally share a schedule.</p>
+</section>
+<section id="the-counterfeit-consumables" class="story">
+<h3>The counterfeit consumables</h3>
+<p>Counterfeit consumables were entering the supply chain for a Class 2B wound-healing device I’d designed. Patients were being treated with spurious parts on equipment that had to work, and the complaints came back as <em>the device is broken</em>. We closed the loop end to end — connected device fleet, mobile app, cloud backend, and authentication built into the manufacturing line — then layered ML across the fleet for early warning on field failures. Those devices are still running in top hospitals across India and exported to around 17 countries.</p>
+</section>
+<section id="the-interrupt-storm" class="story">
+<h3>The interrupt storm</h3>
+<p>A national e-pharmacy’s fulfilment org was drowning in on-call. Every page preempted planned work, so the roadmap was being funded and not delivered. I split the queues — a separate scrum, a dedicated pool, interrupt work fenced off from delivery — and made every fix two fixes: restore service now, and remove the class of failure that generated it. Almost nobody does the second half, and it is the only reason the number stayed down. Eight interns took the interrupt queue and came out of it understanding the system better than most of the people who built it. — <a href="/writing/scrum-engineering/">The Scrum–Engineering Model</a></p>
+</section>
+<h2 id="what-i-believe">What I believe</h2>
+<div class="belief">
+<p>Most engineering teams calibrate their rigour by habit rather than by consequence.</p>
+<p>I’ve built systems where being wrong costs a limb, and systems where being wrong costs a rounding error. The teams that struggle are the ones applying medical-device process to a checkout page, or checkout-page process to something that touches a human. Knowing which one you’re building is most of the job.</p>
+</div>
+<h2 id="get-in-touch">Get in touch</h2>
+<p>Currently Fractional CTO to a deep-tech company building instrumentation and applied AI for a regulated physical industry, and open to a small number of additional engagements.</p>
+<p>If technology is what stands between a company and its next stage — whether you’re the founder, the investor or the board — get in touch.</p>
+
+
+  <footer>
+    <a href="mailto:abhinav@prkhya.com">abhinav@prkhya.com</a>
+    <a href="https://linkedin.com/in/kryochronic">LinkedIn</a>
+    <a href="https://github.com/kryochronic">GitHub</a>
+    <p class="colophon">Prkhya · New Delhi, India<br>This page is hand-written HTML with no trackers, no cookies and no JavaScript. <a href="https://github.com/kryochronic">Source on GitHub.</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

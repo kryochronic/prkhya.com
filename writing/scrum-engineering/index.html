@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Scrum–Engineering Model</title>
+<meta name="description" content="Actors, Tools, Process, Storm. A series on why an org drowning in on-call is an org in an interrupt storm — and what fixed it.">
+<meta property="og:title" content="The Scrum–Engineering Model">
+<meta property="og:description" content="Actors, Tools, Process, Storm. A series on why an org drowning in on-call is an org in an interrupt storm — and what fixed it.">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap article">
+
+  <a class="backlink" href="/writing/">← Writing</a>
+
+  <header>
+    <p class="part-label">Engineering organisations as systems</p>
+    <h1>The Scrum–Engineering Model</h1>
+    <p class="lede">Actors → Tools → Process → Storm</p>
+  </header>
+
+<blockquote>
+<p>An org drowning in on-call is an org in an interrupt storm. A team planning execution nine months ahead is a team whose working set doesn’t fit in cache.
+<strong>Both are scheduling failures. Both come out of the org budget.</strong></p>
+</blockquote>
+<p>A system consistently averaging <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>90</mn><mi>%</mi><mo>+</mo></mrow><annotation encoding="application/x-tex">90\%+</annotation></semantics></math></em> utilisation is a system with little headroom and rapidly rising latency. Engineering organisations invariably get their prioritisation wrong and ship ad hoc — get it out first and fix it later<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> — in the name of a dynamic<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> work culture.</p>
+<p>Capacity that is somehow both fully utilised and permanently behind is a conundrum faced by organisations large and small. “work harder™” doesn’t make this better. It makes it worse. If utilisation is consistently <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mn>100</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">≥ 100\%</annotation></semantics></math></em>, bad things may happen™.</p>
+<p>Computer science has spent fifty years on versions of this problem, and the fundamentals transfer. Organisations and leaders can either just work harder™ and wither, or apply the basics and weather this storm. Where I did it, on-call volume went from roughly six thousand issues a year to roughly six hundred. But the tools and the measurements<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> have to exist first<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, which is where this starts.</p>
+<h2 id="the-parts">The parts</h2>
+<ul class="series-toc">
+<li>
+<span class="part">Part I</span>
+<a href="/writing/scrum-engineering/actors/">The Actors</a>
+<span class="blurb">Who — and what is each good for? Taxonomy, and the two dogmas.</span>
+</li>
+<li>
+<span class="part">Part II</span>
+<a href="/writing/scrum-engineering/tools/">The Tools</a>
+<span class="blurb">With what — where does the queue actually live? The JIRA rehabilitation.</span>
+</li>
+<li>
+<span class="part">Part III</span>
+<a href="/writing/scrum-engineering/process/">The Process</a>
+<span class="blurb">How — ticks, batch size, bounded lookahead. Nine months of plan delivered in three.</span>
+</li>
+<li>
+<span class="part">Part IV</span>
+<a href="/writing/scrum-engineering/storm/">The Storm</a>
+<span class="blurb">Interrupts — two queues, top and bottom halves. Six thousand on-calls a year into six hundred.</span>
+</li>
+</ul>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>And also call it “CI/CD”.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>A phenomenon much more taxing on an average organisation than on computers.<br />
+Backtrace:<br />
+→ Morning coffee<br />
+→ Start<br />
+→ Take 4 hours to get to a productive 15 minutes<br />
+→ Switch work stream after 5 ( minutes )<br />
+→ Rinse and repeat.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The CTO of a startup I consulted with chronically complained about how work never gets done. He was apparently the highest priority interrupt in every Sprint.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>So that the CXOs can measure how much they interrupt themselves.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+  <footer>
+    <a href="mailto:abhinav@prkhya.com">abhinav@prkhya.com</a>
+    <a href="https://linkedin.com/in/kryochronic">LinkedIn</a>
+    <a href="https://github.com/kryochronic">GitHub</a>
+    <p class="colophon">Prkhya · New Delhi, India</p>
+  </footer>
+
+</div>
+</body>
+</html>

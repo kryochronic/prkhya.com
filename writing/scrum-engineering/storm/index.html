@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Storm — The Scrum–Engineering Model</title>
+<meta name="description" content="Isolated interrupts make delivery protectable: six thousand on-calls a year into six hundred, and eight interns into domain experts.">
+<meta property="og:title" content="The Storm">
+<meta property="og:description" content="Isolated interrupts make delivery protectable: six thousand on-calls a year into six hundred, and eight interns into domain experts.">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap article">
+
+  <a class="backlink" href="/writing/scrum-engineering/">← The Scrum–Engineering Model</a>
+
+  <header>
+    <p class="part-label">Part IV — The Storm</p>
+    <h1>The Storm</h1>
+    <p class="post-meta">2026 September</p>
+    <p class="epigraph">Servicing interrupts faster is not the same as receiving fewer of them.</p>
+    <p class="lede">Isolate the interrupts. Separate the tactical from the structural. Lower <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></em> instead of merely raising <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math></em>. Let the failures train the people. Protect the planned work.</p>
+  </header>
+
+<h2 id="reliability-six-thousand-into-six-hundred">Reliability: six thousand into six hundred</h2>
+<h3 id="two-queues-two-schedulers">Two queues, two schedulers</h3>
+<p>Priority queues were invented for a reason. Interrupt-driven work and planned work do not belong on the same run queue.
+Together, the interrupts starve the planned work — every time, not occasionally, and not because anyone lacked discipline.</p>
+<p>It’s what happens when two priority classes share a queue and one can preempt. So: two daily scrums. A delivery scrum, plus a separate fifteen-minute scrum for on-calls. Separate queue, separate scheduler, separate pool. The segregation is the precondition for everything that follows.</p>
+<h3 id="the-interns-platoon">The Interns’ Platoon</h3>
+<p>Different Org, Different Scale, Different Problems.</p>
+<p>I joined an e-Commerce organisation after they were acquired by one of the largest business houses in the world. Post-acquisition, operational scaling broke the system. Enterprise integrations — IAM migrations, SAP ERP bridges, POS retail syncs, and B2B pipelines — hit simultaneously. Order volume exploded, taking customer and internal on-call PagerDuty calls with it. Churn spiked, and engineering capacity withered. Management’s default response was “work harder™” or assign raw recruits.</p>
+<p>The problem was fairly deep, but how deep was realised when we measured it: roughly six thousand on-calls a year. The backlog started exploding due to competing priorities. Commitments due to the acquisition couldn’t be pushed but neither could the Customers’ grievances<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>I took a third of the incoming intern cohort and put them directly to the interrupt queue. So eight people, dedicated to the interrupt/on-call queue, all fresh and had not a clue<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> about how to solve the issues.</p>
+<p>This Bounded pool = Bounded blast radius: the storm still existed, but hit eight people instead of seventy five.</p>
+<h3 id="top-half-bottom-half">Top half, bottom half</h3>
+<p>With persistence &amp; patience the platoon started the tactical fixes first, but very soon every on-call GENERATOR got decomposed into two fixes, both mandatory:
+- Tactical: restore service now. Minimal, fast, interrupt context. Raises <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math></em>.
+- Structural: make this CLASS of on-call stop arriving. Deferred to scheduled context.
+Lowers <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></em>.</p>
+<p>That is precisely how an OS handles interrupts. Staying in interrupt context is what livelocks the system<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>Teams invariably ship the top half, because it stops the pager — and the moment this pager stops, the incentives move to the next page. Mandating the bottom half<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is the entire difference between servicing interrupts faster and receiving fewer interrupts.</p>
+<p>And this is what the on-call scrum was structurally FOR. It’s the workqueue — the scheduled context in which bottom halves actually run.</p>
+<h4 id="two-phases-to-six-hundred">Two phases to six hundred</h4>
+<p>Phase 1 — stabilise. Top halves. Triage, ownership, service restored fast. <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math></em> up, <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> drops below 1, the queue stops diverging. Everyone attempts this phase.
+Phase 2 — drain and hold. Bottom halves compound. Each structural fix permanently removes a generator, so <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></em> falls and KEEPS falling. Almost nobody reaches this phase, and it is the only reason the number stayed down.</p>
+<p>Phase 1 took about a quarter. Not a quarter to drain the queue – a quarter for the <em>slope</em> to reverse, which is the earlier event and by far the more informative one. A backlog that is still large but has started falling is a solved problem waiting on time. A backlog that is flat and enormous is not.</p>
+<p>That moment is also where most engagements end. The chart has turned, the pager is quieter, and everyone would now like to talk about the roadmap. Phase 2 is the dull part – removing one class of generator at a time, in scheduled context, long after it stopped being interesting<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>. The ten-fold came from the dull part. Phase 1 only buys the right to attempt it.</p>
+<p>One caveat on what is being counted, because it is the usual place a claim like this quietly inflates: these are valid on-call tickets reaching engineering, not raw traffic into the group mailbox. The mailbox stayed busy throughout. Conflating the two is how an organisation argues itself out of a result it has actually achieved.</p>
+<hr />
+<h3 id="the-three-objections">The three objections</h3>
+<p>Nobody wanted this. It is worth being precise about who objected and on what grounds, because the three objections were not one objection, and only one of them was wrong in an interesting way.</p>
+<p>The senior engineers split. One camp wanted the interns pointed at <em>their</em> grunt work – the tickets they were tired of. That is a different queue with a different sampling function, and work selected by whoever is most annoyed teaches nothing in particular. That version of the idea looks identical from the outside, is worthless, and is the version most likely to be built by somebody copying this. On-call is worth something as a curriculum<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> precisely because it is sampled by failure frequency rather than by irritation.</p>
+<p>The second camp wanted the interns on new features. This is the generous instinct and the conventional one, and it is right about the individual while being wrong about the system<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. Features fail slowly, ambiguously, and months downstream of the decision that caused the failure. On-call fails in minutes, unambiguously, with a stack trace attached. If the object is to build(or how not to build, depends on perspective) an engineer, the second signal is worth more, and it is available in week one.</p>
+<p>The platoon objected as well, and theirs was the correct objection<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. Fixing other people’s bugs is not a dream first job and no amount of queueing theory makes it one. That cost was real, it was paid by eight people who did not choose it, and the case for it was a promise about the future: that a quarter of being paged by the system would leave them understanding it better than most of the people who built it. The promise happened to come true. It was not verifiable at the time, and anyone proposing this arrangement is asking to be trusted on precisely that point.</p>
+<hr />
+<h3 id="the-dividend-nobody-planned-eight-domain-experts">The dividend nobody planned: eight domain experts</h3>
+<p>A quarter of fixing on-calls trained eight interns in a vast OMS-to-fulfillment ecosystem. Looks like a happy accident. It isn’t — it’s structural:
+On-call is the most complete curriculum an organisation possesses, because it is importance-sampled by real failure frequency.</p>
+<p>No syllabus designer could produce it. It teaches exactly the parts that break, weighted by how often they break, in the order they break. They didn’t learn the ecosystem by reading it. They learned it by being paged by it. In the model’s terms: they started cold, every page a cache miss. A quarter later the working set was resident.</p>
+<h3 id="why-this-had-to-come-first">Why this had to come first</h3>
+<p>The platoon absorbing interrupts is what made the delivery pipeline uninterruptible. You cannot run a preemptive scheduler on a pipeline that something else is already preempting. Ticks, small batches and a bounded horizon only work on protected capacity. Reliability was never competing with delivery for the same people. Fencing it off is what made delivery possible at all.</p>
+<p>And why the parts are ordered as they are: the right actors on the right queues (I), instrumented well enough to see <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> (II), scheduled often enough to run the bottom halves (III and IV).</p>
+<p>None of this had to be taught to a room of seventy five application engineers. They already knew what an unstable queue costs. They had simply never been told that the thing they were standing in was one.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Again almost like choosing rent or food.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The system had documentation. It was as accurate as of the last Ice Age.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Any baremetal / OS splits handlers into a top half in interrupt context doing the bare minimum, and a bottom half — softirq, tasklet, workqueue — deferring heavy work to a schedulable context. Trouble stems when there is always an interrupt waiting while the CPU is serving one!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Every organisation ships the tactical fix. The structural fix is scheduled for “next quarter” — a unit that shares its name with a calendar period but behaves rather more like a horizon in general relativity: permanently visible, never actually reached.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Every organisation ships the tactical fix. The structural fix is scheduled for “next quarter” — a unit that shares its name with a calendar period but behaves rather more like a horizon in general relativity: permanently visible, never actually reached.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>No training budget was spent on any of this. I mention it because I have since sat through several presentations on learning-and-development strategy, and not one of them proposed “allow the system to page them at three in the morning for twelve weeks” — which is a pity, because it is the only method I have seen work at scale.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>And we had many. It wasn’t just an OMS or a fulfillment Systems as in an e-Commerce, it was the complete Supply Chain of an e-Pharmacy with the nuances of regulations also built in. On top of it, mostly built by interns whose zeal to <em>write</em> code is unmatchable. If only they could <em>read</em> code, I wouldn’t have inherited a 10,000 lines;Python.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>There is a moment, somewhere around the fourth page of the night, when an engineer stops fixing the system and starts updating their CV. Nobody instruments this. It is the most predictive metric you have.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+  <nav class="series-nav">
+    <a class="prev" href="/writing/scrum-engineering/process/">Part III — The Process</a>
+    <a class="next" href="/writing/scrum-engineering/">Series index</a>
+  </nav>
+
+  <footer>
+    <a href="mailto:abhinav@prkhya.com">abhinav@prkhya.com</a>
+    <a href="https://linkedin.com/in/kryochronic">LinkedIn</a>
+    <a href="https://github.com/kryochronic">GitHub</a>
+    <p class="colophon">Prkhya · New Delhi, India</p>
+  </footer>
+
+</div>
+</body>
+</html>

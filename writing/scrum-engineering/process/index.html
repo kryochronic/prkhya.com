@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Process — The Scrum–Engineering Model</title>
+<meta name="description" content="Small batches make delivery schedulable: one team, nine months of plan delivered in three.">
+<meta property="og:title" content="The Process">
+<meta property="og:description" content="Small batches make delivery schedulable: one team, nine months of plan delivered in three.">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap article">
+
+  <a class="backlink" href="/writing/scrum-engineering/">← The Scrum–Engineering Model</a>
+
+  <header>
+    <p class="part-label">Part III — The Process</p>
+    <h1>The Process</h1>
+    <p class="post-meta">2025 September</p>
+    <p class="epigraph">Kanban is cooperative multitasking. It doesn’t survive contact with real workloads.</p>
+    <p class="lede">Reduce the batch. Shorten the loop. Bound the lookahead. Let the timer, not the task, decide when work yields.</p>
+  </header>
+
+<h2 id="delivery-nine-months-into-three">Delivery: nine months into three</h2>
+<p>I was brought into a cyber-security organisation of 50+ devs, where Sprints ran for 3 Months. Sprints were effectively quarterly roadmap blocks, and Standup(s) were effectively a Kanban without any WIP limits. They also had a designated “Scrum Master” and a designated “Product Owner” for the whole organisation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The organisation had all the relevant tools, and had the ceremonial Agile-ish practices but delivery horizon was typically a six months to a year, depending on the complexity of the feature.</p>
+<p>A week of observations was enough. I picked a team within the org who had a 3 Sprint Plan. This 9 person team had hour-long stand ups daily<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, with commitments made that “this - the assigned ticket” would be done today<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, everyday. The team was essentially running marathons camouflaged as Sprints. The problem was deeply structural, i.e, the Org’s PO specified “features” which were more like releases, to be delivered as one stack. The Org’s Scrum Master would just stack the break-up given by the engineers and sequence them out and end up with a nine<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> month delivery and adjust the Sprint(s) accordingly. Digging through their Jira boards and the Control Charts it was evident where the problems were. This particular system was running on a 1000ms Tick Time, vs the typical 1ms Tick times. It was time for a Kernel Upgrade.</p>
+<h3 id="the-upgrade">The Upgrade</h3>
+<p>The team wasn’t slow. The scheduling quantum was too large for the work. I applied a simple two-week-time-boxed delivery plan for the team, with some simple rules:
+1. two-weeks now, broken down daily<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and demonstrable
+1. six weeks worth of backlog sequenced &amp; estimated coarsely, and
+1. a comma-separated list of goals in sequence
+for every two weeks for the next 6 two-week-time-boxes,
+essentially a quarter, rolling.</p>
+<p>And later re-defined the Sprint to a two week period, much to the discomfort of many.</p>
+<p>The first new “Sprint” was a disaster, after all how can you demonstrate work worth months in weeks. The ones who <em>got it</em> were able to demonstrate the Mock-UIs waiting for APIs to serve real data with. It took the backend engineers longer ( than “a Sprint”) but they started to make available the APIs while the Front-End army started to do more mocks ready for integration every sprint on the existing scaffolding( it wasn’t a “new” product ). By the end of Sprint 2 the team started to loop in QA for “instant QA” of the features integrated.</p>
+<p>The “Committed vs Delivered” started to show( took 2 Sprints ) balance, then focus on the Speed<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. By Sprint 3, the Goals(of the real Sprint ) started to be negotiated within the team, as in, the backend for feature X is closer to reality can we pick the frontend for X instead of Y. This <em>self governance</em> over these <em>micro-milestones</em> were evident, the speed picked up and the direction was clearly towards the end goal. This Velocity ( Speed + Direction ) eventually had the Roadmap Duration sliced by two thirds and a shippable delivery was handed to QA whose original planned goal was supposed to be 2 Quarters away.</p>
+<h3 id="morals-of-the-stories">Morals of the Stories</h3>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mtext mathvariant="normal">Batch Size </mtext><mspace width="0.333em"></mspace></mrow><mo>↓</mo><mo>⟹</mo><msub><mi>T</mi><mtext mathvariant="normal">cycle</mtext></msub><mo>↓</mo><mo>⟹</mo><mrow><mtext mathvariant="normal">Feedback Latency </mtext><mspace width="0.333em"></mspace></mrow><mo>↓</mo><mo>⟹</mo><mrow><mtext mathvariant="normal">Rework </mtext><mspace width="0.333em"></mspace></mrow><mo>↓</mo><mo>⟹</mo><mrow><mtext mathvariant="normal">Velocity </mtext><mspace width="0.333em"></mspace></mrow><mo>↑</mo></mrow><annotation encoding="application/x-tex">\text{Batch Size } \downarrow \implies T_{\text{cycle}} \downarrow \implies \text{Feedback Latency } \downarrow \implies \text{Rework } \downarrow \implies \text{Velocity } \uparrow</annotation></semantics></math></p>
+<h4 id="dont-set-target-velocity-measure-it">Don’t set Target Velocity, Measure it</h4>
+<p>Velocity rose. But that was the effect, not the target.
+#### Batch size</p>
+<p>One big piece a month → a few small pieces a sprint. Reducing the quantum.
+Large batches: long uninterruptible run. late feedback, high cost of being wrong
+The number that makes it concrete: same nine people, same work, a third of the
+elapsed time. Not because anyone worked harder — completion, not effort, is what a
+calendar measures, and small pieces complete.</p>
+<h4 id="cooperative-to-preemption">Cooperative to Preemption</h4>
+<p>The usual fashionable migration is Scrum → Kanban<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.
+Kanban = cooperative multitasking. Continuous flow, no timer, tasks yield when they choose.</p>
+<p>Elegant, and works under one condition: every task is well-behaved.
+Sprints = preemptive scheduling. A timer interrupt at a fixed quantum, whether or not the task feels ready.
+The micro-governance that the team started practicing was the effect of the Scrum’s innate mechanism ( preemption )</p>
+<p>Preemption wasn’t invented because it’s prettier — cooperative scheduling doesn’t survive real workloads.
+One badly-behaved task never yields and starves everything, with no preemption point at which anyone can intervene<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</p>
+<p>In reality<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> a WIP limit is much closer to admission control / backpressure than preemption. It prevents additional work from entering execution. It doesn’t interrupt a task already executing. Sprints impose a scheduling quantum. WIP limits impose admission control. Both create a point at which the system can reconsider what gets to consume capacity - preemptive scheduling. It was painful to see the worst combination of both Scrum &amp; Kanban being practiced.</p>
+<h4 id="bounded-lookahead-with-increments">Bounded lookahead with increments</h4>
+<p>A nine-month plan is a working set that exceeds cache for most human brains. It spills to documents nobody reads, and every subsequent decision is a cache miss. Cutting the horizon to two or three sprints for a tactical team executing<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> brings the working set back inside cache. It didn’t FEEL lighter for psychological reasons; it was lighter, as a capacity fact<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p>
+<p>To declutter the human brains burdened with planning for months the initial lookahead for</p>
+<ol type="1">
+<li>execution was capped at two weeks</li>
+<li>estimating was capped at six weeks</li>
+<li>horizon for planning was capped at twelve weeks</li>
+</ol>
+<p>As the Velocity rises, so does the look ahead with practice, binding it early on was a constraint to keep the working set in the Cache, but it wasn’t the target<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mtext mathvariant="normal">Velocity </mtext><mspace width="0.333em"></mspace></mrow><mo>↑</mo><mo>→</mo><mtext mathvariant="normal">Lookahead</mtext><mo>↑</mo></mrow><annotation encoding="application/x-tex">\text{Velocity } \uparrow \to \text{Lookahead} \uparrow</annotation></semantics></math></p>
+<p>All of this was possible because the Act 1 team’s capacity was its own. <a href="/writing/scrum-engineering/storm/">Part IV</a> is what it takes to make that true when it isn’t.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Scrum Master &amp; Product Owner as designation is counter intuitive to me. I see both as roles than designations.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The standup is fifteen minutes. It is always fifteen minutes. It has never once been fifteen minutes.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>It’s proof that god exists and Engineers still make commitments to finish today on the premise of god willing.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Humans plan nine months ahead — not because we believe it, but because the alternative is admitting we don’t know.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Their estimation flavour was “Time/Effort”.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Remember, speed ≠ velocity.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>I want to be clear that I have nothing against Kanban, in the same way I have nothing against trusting people to form an orderly queue. It works beautifully in Tokyo and rather less well at a bar.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>A priority inversion can still happen but repeats here are most likely an HR problem, not an engineering one.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>The team effectively ran Kanban WITHOUT enforced WIP limits — Kanban in name only, a to-do list with columns, with a 3 Month Sprint. Also by-products of a POs &amp; PMs at org level rather than at a team level.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>It is probably the strongest argument for evaluating humans from the lens of tactical vs strategic or in other words, the Policy vs Mechanism.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Every month of plan beyond your prediction horizon is speculative work against a branch you cannot predict. It gets flushed.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Humans are the only systems capable of expanding their Cache.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+  <nav class="series-nav">
+    <a class="prev" href="/writing/scrum-engineering/tools/">Part II — The Tools</a>
+    <a class="next" href="/writing/scrum-engineering/storm/">Part IV — The Storm</a>
+  </nav>
+
+  <footer>
+    <a href="mailto:abhinav@prkhya.com">abhinav@prkhya.com</a>
+    <a href="https://linkedin.com/in/kryochronic">LinkedIn</a>
+    <a href="https://github.com/kryochronic">GitHub</a>
+    <p class="colophon">Prkhya · New Delhi, India</p>
+  </footer>
+
+</div>
+</body>
+</html>

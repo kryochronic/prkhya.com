@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Tools — The Scrum–Engineering Model</title>
+<meta name="description" content="Measurability of a process is bound by the Data Structure that represents it.">
+<meta property="og:title" content="The Tools">
+<meta property="og:description" content="Measurability of a process is bound by the Data Structure that represents it.">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap article">
+
+  <a class="backlink" href="/writing/scrum-engineering/">← The Scrum–Engineering Model</a>
+
+  <header>
+    <p class="part-label">Part II – The Tools</p>
+    <h1>The Tools</h1>
+    <p class="post-meta">2026 August</p>
+    <p class="epigraph">A queue is an abstract data type. JIRA<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> is one implementation.</p>
+    <p class="lede">Pushing an engineering team from 90% to 99% utilisation is a real ten-percent gain. It also makes everything wait eleven times longer.</p>
+  </header>
+
+<p>Your process’s asymptotic complexity is bounded by your data structure.</p>
+<h2 id="the-cringe-is-earned.-it-is-also-misattributed.">The cringe is earned. It is also misattributed.</h2>
+<p>Nobody cringes at the tool – they cringe at what was done to them with it: surveillance, telemetry for someone else’s dashboard, story points as a productivity metric. Real, widespread injury. But blaming JIRA for bad Agile is blaming the profiler for the slow code.</p>
+<p>Practical consequence: the people who refuse the tool then have no evidence when they need it – which is how a backlog accumulates for years without anyone able to prove it is diverging.</p>
+<h2 id="the-complexity-argument">The complexity argument</h2>
+<p>Backlog in heads and Slack = unsorted list. O(n) to find the next item, traversed by a human under time pressure who stops at the first plausible match. Not a prioritised queue – a linear scan with an early exit.
+Properly configured Backlog ( say on JIRA ) = heap. O(log n) insert, O(1) peek<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>“The tool doesn’t matter, the process does” is the claim that the data structure doesn’t matter as long as the algorithm is good. No engineer believes that about code.</p>
+<h2 id="created-vs-resolved-cvr-is-a-stability-instrument">Created vs Resolved (CVR) is a stability instrument</h2>
+<p>The CVR chart (a standard off the shelf instrument on JIRA ) plots created/resolved; slopes give (<em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></em>) against service rate (<em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math></em>).
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><mfrac><mi>λ</mi><mi>μ</mi></mfrac></mrow><annotation encoding="application/x-tex">\rho = \frac{\lambda}{\mu}</annotation></semantics></math>
+If <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> ≥ 1 the queue diverges – grows without bound regardless of effort.
+So the backlog was never just “a big backlog” ( because it wasn’t visible on email threads ). It was an unstable queue that had been running a long time. Different diagnosis, different cure.
+Why “work harder™<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>” will always fail: it pushes <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math></em>, and <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math></em> cannot be increased indefinitely by asking the same people to “work harder™”. It cannot beat an unbounded <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></em>. Root-causing sources is the only lever on <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></em>.</p>
+<p>As <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> → 1, queue length → ∞. “We’re at ≥100% utilisation” and “our backlog is exploding” are the same sentence. Slack<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> isn’t waste; it absorbs variance. For a standard <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>/</mi><mi>M</mi><mi>/</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">M/M/1</annotation></semantics></math></em> queue, the expected number in the system is:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mfrac><mi>ρ</mi><mrow><mn>1</mn><mo>−</mo><mi>ρ</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">L = \frac{\rho}{1-\rho}</annotation></semantics></math></p>
+<p>Which behaves like this:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;"><em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em></th>
+<th style="text-align: right;"><em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math></em></th>
+<th style="text-align: left;">Business Reality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0.50</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">High slack, rapid response time, low feature thrash.</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.80</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Healthy equilibrium. Predictable delivery, with room for variance.</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.90</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">Fragile. Minor interrupts trigger missed sprint commitments.</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.95</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: left;">Systemic thrashing<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.99</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: left;">“work harder™.”</td>
+</tr>
+</tbody>
+</table>
+<p>Thus going from <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>90</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">90\%</annotation></semantics></math></em> to <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>99</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">99\%</annotation></semantics></math></em> utilisation – what anyone would call a <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>9</mn><mi>%</mi><mi>/</mi><mn>10</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">9\%/10\%</annotation></semantics></math></em> ( depending on absolute/relative ) efficiency gain – stretches the queue length <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>11</mn><mo>×</mo></mrow><annotation encoding="application/x-tex">11×</annotation></semantics></math></em>. The relationship isn’t linear, it is hyperbolic, and it detonates as <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> → 1.</p>
+<p>Therefore the CVR chart proves a <em>stability</em> property, not an effort property and is the easiest signal to misinterpret. A rising resolved line looks like progress; it is only progress if it crosses the created line, and stays there, but with <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>≪</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\rho \ll 1</annotation></semantics></math></em>.</p>
+<h3 id="the-shape-that-actually-matters">The shape that actually matters</h3>
+<p>The figures below are illustrative. They are manufactured to the shape the instrument showed, because the originals belong to a former employer; the numbers are invented, the shape and the mechanism are the claim.</p>
+<figure>
+<img src="img/created-vs-resolved.svg" alt="An example CVR" />
+<figcaption aria-hidden="true">An example CVR</figcaption>
+</figure>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Month</th>
+<th style="text-align: right;">Created</th>
+<th style="text-align: right;">Resolved</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">410</td>
+<td style="text-align: right;">406</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">395</td>
+<td style="text-align: right;">399</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">428</td>
+<td style="text-align: right;">424</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">371</td>
+<td style="text-align: right;">376</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">398</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">387</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Six months</strong></td>
+<td style="text-align: right;"><strong>2,390</strong></td>
+<td style="text-align: right;"><strong>2,390</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Net zero. The two lines sit on top of each other for half a year while a large standing backlog neither grows nor drains.</p>
+<p>That is the chart a diligence call is most likely to misread, because lines that track each other look like a team keeping up. It is in fact the signature of a system parked at the point where the formula above divides by zero – <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> = 1.00, where <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math></em> has no finite value at all. Separation is the easy case. Anyone spots separation. This is the one that gets missed.</p>
+<p>Queue depth is what converts the reading, and it is arithmetic anyone can do during the call. Inverting <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mfrac><mi>ρ</mi><mrow><mn>1</mn><mo>−</mo><mi>ρ</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">L = \frac{\rho}{1-\rho}</annotation></semantics></math> gives <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><mfrac><mi>L</mi><mrow><mn>1</mn><mo>+</mo><mi>L</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\rho = \frac{L}{1+L}</annotation></semantics></math>, so a standing queue of 1,200 implies <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> ≈ 0.9992. Not “busy”. Not “at capacity”. Three nines ( <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>99.9</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">99.9 \%</annotation></semantics></math></em> ) of utilisation, sustained across quarters, by people who are being told to work harder™.</p>
+<h2 id="the-control-chart-is-the-one-that-cannot-be-produced-to-order">The Control Chart is the one that cannot be produced to order</h2>
+<p>CVR answers exactly one question: is the queue stable? It says nothing about how long anything waited. For that, the Control Chart: cycle time per issue plotted against the date it completed, with a rolling average and a ±1σ band.</p>
+<p>It matters for two reasons.</p>
+<p>The first is Little’s Law. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>=</mo><mi>λ</mi><mi>W</mi></mrow><annotation encoding="application/x-tex">L = \lambda W</annotation></semantics></math> – the number of items in a system is the arrival rate times the time each one spends inside it. CVR supplies <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></em>. The Control Chart supplies the observed <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>W</mi><annotation encoding="application/x-tex">W</annotation></semantics></math></em>, as cycle time or lead time depending on how the chart is configured. Without it, “we have 1,200 open issues” is a stock with no flow attached, and there is no way to distinguish a fast system carrying a large queue from a slow one carrying a small one.</p>
+<p>The second is the <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math></em> band, which is the reason the chart beats the average it draws<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. Illustrative again, eight months of a single queue:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Cycle time</th>
+<th style="text-align: right;">Issues</th>
+<th style="text-align: right;">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Closed the same day</td>
+<td style="text-align: right;">1,408</td>
+<td style="text-align: right;">88%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Two to ten days</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">9%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Still open after eight months</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">3%</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="img/control-chart.svg" alt="Cycle time per issue — eight months (illustrative)" />
+<figcaption aria-hidden="true">Cycle time per issue — eight months (illustrative)</figcaption>
+</figure>
+<p>1,600 issues, arriving at about seven a day. Nearly nine in ten close inside a day, so the rolling average sits near a day and a half and every summary built on the mean reports a healthy system. The bottom three percent never close at all. Forty-eight issues with no completion date do not have a long cycle time – they have an undefined one, and a class of work whose <em>W</em> is unbounded has <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> ≥ 1 all by itself, inside an organisation whose aggregate looks fine.</p>
+<p>That is what a widening <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math></em> band shows and a flat mean hides: a system losing predictability while its average holds. The eighty-eight percent same-day is precisely what makes the tail invisible to the people reporting upward.</p>
+<blockquote>
+<p>It is also the instrument to ask for on a <em>diligence call</em>, because it is the one nobody can manufacture the night before. Cycle time is computed from per-issue status-transition timestamps. A roadmap can be redrawn, a backlog can be groomed, a status report can be written in whatever shape its author prefers. A Control Chart is a by-product of how the team actually worked, recorded as it happened. Either the history is there or it is not, and either answer tells you something.</p>
+</blockquote>
+<h2 id="empirical-vs-planned">Empirical vs Planned</h2>
+<p>The measurements of the Sprints the “Velocity<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>” <em>š</em>, the Estimates ( Story Points<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> / Effort, what ever is your flavour<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> ) when recorded on the Issues enable an empirically measured quantity, say <em>ê</em>, which is now a measure of what is the error in the originals by the humans recording the ‘Estimates’.</p>
+<p>Epics as a decomposition tree – the breakdown makes items estimable and, more importantly, exposes work that can’t justify itself once it is named. For example an Epic titled “UI improvements” is vague, but when broken down into specific stories like say “Add Loader post Submit” or “Capability to Add Discount Schemes to an Item”, work will either pop-up as <em>justified</em> or “Sales asked this last year → <em>junk</em>”.</p>
+<p>Estimated and properly assorted Backlog will allow us to see an Epic / Version Report which forecasts a release date from observed <em>ê</em>, rather than PjMs plotting a Gantt chart creatively and expecting the Engineering to “work harder™”</p>
+<p><img src="img/example-epic-burndown.png" alt="An Example of the Empirical Prediction" />
+An Example of the Empirical Prediction in JIRA</p>
+<p>Of course it forecasts a <em>distribution</em> ( completion is likely in a certain number of Sprints ), not a date. A forecast defensible with observed throughput is a categorically different object from a date negotiated<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> in a room – and the difference shows the moment it slips.</p>
+<p>Therefore <em>š</em> is empirically measured, not a target. The moment it becomes a target it stops measuring anything. Any observed values of <em>š</em> is in the right direction when <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> → 0, or in that direction. <em>š</em> measures motion( a.k.a amplitude ), <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> measures direction, <em>ê</em> measures quality of estimations, derived via the balance between Committed vs Delivered in a typical “Velocity Chart”.</p>
+<p>Combine <em>š</em> and <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> and you get the true vector<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>: Velocity. That is the difference between random motion and progress. Drive ê → 0 and the band narrows until the promise is worth making<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>.</p>
+<h2 id="grooming-the-garbage">Grooming the garbage</h2>
+<p>Ungroomed backlog = memory leak. Unbounded growth of objects nothing references. Never fails loudly; degrades until every scan is expensive and nobody trusts the queue. Stale tickets aren’t clutter – they’re retained references.</p>
+<p>A backlog everyone has stopped reading has already OOM’d.</p>
+<h2 id="you-cannot-coalesce-what-you-cannot-count">You cannot coalesce what you cannot count</h2>
+<p>The backlog depth was not a known quantity until the tooling made it one. Pages arriving by phone call, DM or tap on the shoulder are uninstrumented interrupts – they cost the pipeline exactly as much as a logged one and appear in no metric.</p>
+<p>The first job of the tool isn’t organising work; it is making the work (planned/unplanned, scheduled/interrupt) <em>visible</em>. Everything Part III / IV does depends on that.</p>
+<h2 id="where-tooling-doesnt-help">Where tooling doesn’t help</h2>
+<p>After a decade of tooling with custom states<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>, myriad workflows and fancy fields, I realised a tool configured with simple workflows, states &amp; no custom fields is enough since a tool supplies no prioritisation judgement, only cheap execution of it.</p>
+<p>A heap with a bad comparator is a fast machine for producing the wrong answer.
+The tool holds the queue; something still has to run the scheduler.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Say “JIRA” at a gathering of engineers and watch the room perform a small, synchronised flinch. It is the only word I know that reliably produces a physical response in people who have never met one another.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>I once asked a VP what the top priority was. It took eleven minutes and required two other people to be summoned. That is not O(1). That is not even O(n). That is a distributed consensus protocol with a human quorum and no timeout.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>work harder™ ≔ utilisation ≥ 100% ≔ ƒ(<em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> → 1, queue.length → ∞).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Slack = Idle capacity, not the application. The collision of terms is
+unfortunate, and entirely the application’s fault.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Backlog explodes; little capacity remains for planned work.
+Almost like choosing rent or food, and calling it efficiency.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>In other words, is <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mtext mathvariant="normal">ETA</mtext><mi>L</mi></msub><mo>=</mo><mtext mathvariant="normal">3 Months ± 3 days</mtext><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> OR </mtext><mspace width="0.333em"></mspace></mrow><mtext mathvariant="normal">2 Years</mtext><mo>±</mo><mtext mathvariant="normal">2 Months</mtext></mrow><annotation encoding="application/x-tex">\text{ETA}_{L} = \text{3 Months ± 3 days} \text{ OR } \text{2 Years} ± \text{2 Months}</annotation></semantics></math></em>.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Most PjMs I’ve encountered thought <em>Velocity</em> is a scalar quantity in Effort / Issues / Story Points per Sprint.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Story points were invented so teams could estimate without committing to time. They are now used, almost universally, to commit teams to time. This is roughly what happened to the word “literally”, and about as reversible.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Potato / Potaato.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>Nobody has ever been promoted for saying “somewhere between the 12th and the 26th, at eighty percent confidence”. This is a problem with promotion, not with forecasting.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Scrum’s <em>Velocity</em> should ideally just be called <em>Speed</em>.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>→ 0 is a direction, not a destination. <em>ê</em> never reaches zero, and nothing ever ships precisely at 12/12/12, 12:12:12.1212 as promised on 11/11/11. The question was never <em>what date</em>. It was <em>how wide</em>.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Every organisation believes its workflow is uniquely complex and requires eleven states. Every organisation is wrong. Yours has four, and one of them is “Waiting for Abhinav”.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+  <nav class="series-nav">
+    <a class="prev" href="/writing/scrum-engineering/actors/">Part I – The Actors</a>
+    <a class="next" href="/writing/scrum-engineering/process/">Part III – The Process</a>
+  </nav>
+
+  <footer>
+    <a href="mailto:abhinav@prkhya.com">abhinav@prkhya.com</a>
+    <a href="https://linkedin.com/in/kryochronic">LinkedIn</a>
+    <a href="https://github.com/kryochronic">GitHub</a>
+    <p class="colophon">Prkhya · New Delhi, India</p>
+  </footer>
+
+</div>
+</body>
+</html>
