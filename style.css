@@ -43,10 +43,12 @@ h2{
 .tablewrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
 /* Markdown pipe tables need a header row; ours are empty by design. */
 .tablewrap thead{display:none}
-table{border-collapse:collapse; width:100%; font-size:.95rem; min-width:22rem}
+table{border-collapse:collapse; width:100%; font-size:.95rem; min-width:22rem; margin:0 0 1.4rem}
 td{padding:.62rem 0; border-bottom:1px solid var(--rule); vertical-align:baseline}
 td:first-child{font-family:var(--mono); font-weight:600; white-space:nowrap; padding-right:1.4rem; color:var(--fg)}
 tr:last-child td{border-bottom:none}
+th{padding:.62rem 0; border-bottom:1px solid var(--rule); font-weight:650; vertical-align:baseline}
+th + th, td + td{padding-left:1.4rem}
 
 .story{margin:0 0 2rem; padding-left:1rem; border-left:2px solid var(--rule)}
 .story h3{font-size:1.02rem; margin:0 0 .45rem; font-weight:650; letter-spacing:-.01em}
