@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" role="img" aria-labelledby="cvr-t cvr-d">
+  <title id="cvr-t">Created vs resolved — six months (illustrative)</title>
+  <desc id="cvr-d">Line chart. issues / month over 6 periods. Created runs 410, 395, 428, 371, 402, 384; resolved runs 406, 399, 424, 376, 398, 387. Totals are 2,390 created and 2,390 resolved, a net change of 0. The two lines track each other for the whole period: arrival rate equals service rate, so utilisation sits at 1.00 and the standing backlog neither grows nor drains. Illustrative figures, not measured data.</desc>
+  <style>
+    .surface { fill: #fbfaf8; }
+    .grid    { stroke: #e0ddd2; stroke-width: 1; fill: none; }
+    .axis    { stroke: #5d5a4f; stroke-width: 1; fill: none; }
+    .ink     { fill: #16150f; }
+    .muted   { fill: #5d5a4f; }
+    .a       { stroke: #8a4b1e; }
+    .af      { fill: #8a4b1e; }
+    .b       { stroke: #1a5fb4; }
+    .bf      { fill: #1a5fb4; }
+    .ring    { stroke: #fbfaf8; stroke-width: 2; }
+    .line    { fill: none; stroke-width: 2; stroke-linejoin: round;
+               stroke-linecap: round; }
+    .dash    { stroke-dasharray: 7 5; }
+    .t       { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+    .title   { font-size: 14px; font-weight: 600; }
+    .lab     { font-size: 12px; }
+    .note    { font-size: 12px; }
+    .small   { font-size: 11px; }
+    @media (prefers-color-scheme: dark) {
+      .surface { fill: #131310; }
+      .grid    { stroke: #2e2d26; }
+      .axis    { stroke: #9d998b; }
+      .ink     { fill: #eceae1; }
+      .muted   { fill: #9d998b; }
+      .a       { stroke: #c87d3c; }
+      .af      { fill: #c87d3c; }
+      .b       { stroke: #4a86d8; }
+      .bf      { fill: #4a86d8; }
+      .ring    { stroke: #131310; }
+    }
+  </style>
+  <rect class="surface" width="720" height="400"/>
+  <text class="t title ink" x="24" y="28">Created vs resolved — six months (illustrative)</text>
+  <text class="t small muted" x="24" y="46">issues / month</text>
+  <line class="line a" x1="430" y1="20" x2="458" y2="20"/>
+  <circle class="ring" cx="444" cy="20" r="4"/><circle class="af" cx="444" cy="20" r="4"/>
+  <text class="t lab muted" x="464" y="24">created</text>
+  <line class="line b dash" x1="536.4" y1="20" x2="564.4" y2="20"/>
+  <rect class="ring" x="546.9" y="16.5" width="7" height="7"/><rect class="bf" x="546.9" y="16.5" width="7" height="7"/>
+  <text class="t lab muted" x="570.4" y="24">resolved</text>
+  <line class="grid" x1="56" y1="295.2" x2="628" y2="295.2"/>
+  <line class="grid" x1="56" y1="234.4" x2="628" y2="234.4"/>
+  <line class="grid" x1="56" y1="173.6" x2="628" y2="173.6"/>
+  <line class="grid" x1="56" y1="112.8" x2="628" y2="112.8"/>
+  <line class="grid" x1="56" y1="52" x2="628" y2="52"/>
+  <text class="t small muted" x="48" y="360" text-anchor="end">0.0</text>
+  <text class="t small muted" x="48" y="299.2" text-anchor="end">100.0</text>
+  <text class="t small muted" x="48" y="238.4" text-anchor="end">200.0</text>
+  <text class="t small muted" x="48" y="177.6" text-anchor="end">300.0</text>
+  <text class="t small muted" x="48" y="116.8" text-anchor="end">400.0</text>
+  <text class="t small muted" x="48" y="56" text-anchor="end">500.0</text>
+  <line class="axis" x1="56" y1="356" x2="628" y2="356"/>
+  <text class="t small muted" x="96" y="376" text-anchor="middle">Month 1</text>
+  <text class="t small muted" x="194.4" y="376" text-anchor="middle">Month 2</text>
+  <text class="t small muted" x="292.8" y="376" text-anchor="middle">Month 3</text>
+  <text class="t small muted" x="391.2" y="376" text-anchor="middle">Month 4</text>
+  <text class="t small muted" x="489.6" y="376" text-anchor="middle">Month 5</text>
+  <text class="t small muted" x="588" y="376" text-anchor="middle">Month 6</text>
+  <polyline class="line a" points="96,106.72 194.4,115.84 292.8,95.78 391.2,130.43 489.6,111.58 588,122.53"/>
+  <polyline class="line b dash" points="96,109.15 194.4,113.41 292.8,98.21 391.2,127.39 489.6,114.02 588,120.7"/>
+  <circle class="ring" cx="96" cy="106.72" r="4"/><circle class="af" cx="96" cy="106.72" r="4"/>
+  <circle class="ring" cx="194.4" cy="115.84" r="4"/><circle class="af" cx="194.4" cy="115.84" r="4"/>
+  <circle class="ring" cx="292.8" cy="95.78" r="4"/><circle class="af" cx="292.8" cy="95.78" r="4"/>
+  <circle class="ring" cx="391.2" cy="130.43" r="4"/><circle class="af" cx="391.2" cy="130.43" r="4"/>
+  <circle class="ring" cx="489.6" cy="111.58" r="4"/><circle class="af" cx="489.6" cy="111.58" r="4"/>
+  <circle class="ring" cx="588" cy="122.53" r="4"/><circle class="af" cx="588" cy="122.53" r="4"/>
+  <rect class="ring" x="92.5" y="105.65" width="7" height="7"/><rect class="bf" x="92.5" y="105.65" width="7" height="7"/>
+  <rect class="ring" x="190.9" y="109.91" width="7" height="7"/><rect class="bf" x="190.9" y="109.91" width="7" height="7"/>
+  <rect class="ring" x="289.3" y="94.71" width="7" height="7"/><rect class="bf" x="289.3" y="94.71" width="7" height="7"/>
+  <rect class="ring" x="387.7" y="123.89" width="7" height="7"/><rect class="bf" x="387.7" y="123.89" width="7" height="7"/>
+  <rect class="ring" x="486.1" y="110.52" width="7" height="7"/><rect class="bf" x="486.1" y="110.52" width="7" height="7"/>
+  <rect class="ring" x="584.5" y="117.2" width="7" height="7"/><rect class="bf" x="584.5" y="117.2" width="7" height="7"/>
+  <line class="grid" x1="594" y1="120.7" x2="602" y2="107.7"/>
+  <text class="t small bf" x="606" y="111.7">387 resolved</text>
+  <line class="grid" x1="594" y1="122.53" x2="602" y2="135.53"/>
+  <text class="t small af" x="606" y="139.53">384 created</text>
+  <text class="t note ink" x="96" y="248">2,390 created · 2,390 resolved · net 0</text>
+  <text class="t small muted" x="96" y="268">6 periods. Arrival rate equals service rate:</text>
+  <text class="t small muted" x="96" y="286">ρ = 1.00, and the standing backlog never moves.</text>
+</svg>

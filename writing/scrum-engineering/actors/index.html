@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Actors — The Scrum–Engineering Model</title>
+<meta name="description" content="You cannot manage a system whose state you have chosen not to represent. And the representation determines which properties of that system you can observe, measure, and ultimately control.">
+<meta property="og:title" content="The Actors">
+<meta property="og:description" content="You cannot manage a system whose state you have chosen not to represent. And the representation determines which properties of that system you can observe, measure, and ultimately control.">
+<meta property="og:type" content="article">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap article">
+
+  <a class="backlink" href="/writing/scrum-engineering/">← The Scrum–Engineering Model</a>
+
+  <header>
+    <p class="part-label">Part I — The Actors</p>
+    <h1>The Actors</h1>
+    <p class="post-meta">2025 August</p>
+    <p class="epigraph">Your blocked processes are now beautifully documented. And still blocked.</p>
+    <p class="lede">The actors, the policy, the mechanism and the separation of concerns</p>
+  </header>
+
+<blockquote>
+<p>One team, nine months of planned work compressed into three, with the same people.</p>
+</blockquote>
+<h2 id="the-taxonomy">The taxonomy</h2>
+<p>Agile Scrum methodology is a lot closer to Computer Science fundamentals than one might think. If I were to build this analogy further, something like the following is the result.</p>
+<p>Take for example, an ‘Intern’, akin to an Async Task. Think a lot of lightweight tasks, blocked on IO<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, much in the fashion an Intern is often delegated work. Think of a lot of grunt work of retrieval of information, lightly digested perhaps<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>Similarly, Associates are more like threads<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, capable of more compute than just IO, but not truly independent execution entities yet<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<p>Junior Devs, a bit more like a Process, can spawn ( read lead ) threads / tasks ( Associates / Interns ), can typically work independently i.e. don’t explicitly need a ‘parent’ execute entity.
+Interestingly, if the reader may allow me to stretch this analogy a bit further, the work assigned to the “Devs” is representative of how an ‘Instruction Pipeline’ of the CPU is setup. If not frequently switching contexts, the CPU performs optimally, subject to of course some basic decency in writing code<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> which AFAIK, is rarer &amp; elusive than gold<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
+<p>Senior Devs are analogous to Containers since they are able to cater to a set of composite, perhaps even complex, requirements and be able to serve them as a black box, with a bunch of Processes baked in for them to be able to do that.</p>
+<p>A key parallel, the Scrum’s Product Owner, i.e., the Scheduler, makes sure that the highest priority work is queued and as soon as the OS Tick expires, it starts to get executed. Hence the “Backlog” of the Scrum is akin to a “Prioritised, Ordered Queue” from which the individual dev’s Instruction Pipeline is loaded. In an ideal geek’s world this change in the pipeline / context switch should happen at Tick transitions, a.k.a, Sprint Starts and Stops, which again, in a geek’s ideal world are atomic.</p>
+<p>Continuing the analogy, the Sprint, rather the duration of the Sprint represents the Tick of the OS, where the Kernel assesses and runs the highest priority tasks to be executed. Within a Sprint, the resources required by the “Devs” are supplied by the OS via Kernel calls and hence the simile between the Kernel &amp; the Scrum Master.</p>
+<p>What, one might ask, is the utility of this reductionist model? Well recently a CEO of a Tech Company asked me to help streamline their 50+ Dev Team to be a bit more “efficient”, and it was an interesting experience, and this model helped me connect to the crowd of geeks in the Org.</p>
+<h2 id="policy-mechanism">Policy ≠ Mechanism</h2>
+<p>Separation of policy and mechanism — one of the oldest principles in OS
+architecture. Both dogmas violate it.</p>
+<h3 id="project-manager-pjm-scrum-master-sm">Project Manager (PjM) ≠ Scrum Master (SM)</h3>
+<p><strong>SM is the kernel</strong>: services resource requests, unblocks, frees things. Syscalls.
+<strong>PjM</strong> as commonly practiced <i>records</i> status. A <code>logging daemon</code> in this context!</p>
+<p>Substitute a <code>logging daemon</code> for your kernel and blocked processes stay blocked. <i>Your blocked processes are now beautifully documented. And still blocked.</i></p>
+<blockquote>
+<p>One of the best practices I’ve witnessed is the closure of every Story every Sprint, cloned and moved to the next Sprint just to keep the “Velocity” high. This went on for more than a year till I put a stop to it in the first week into the Org.</p>
+</blockquote>
+<h3 id="product-manager-pm-product-owner-po">Product Manager (PM) ≠ Product Owner (PO)</h3>
+<p><strong>PM sets policy</strong>: what matters, for whom, why → the comparator function
+<strong>PO runs mechanism</strong>: which item is next, dispatched now → the scheduler
+Fuse them and every scheduling decision reopens the strategy question.
+O(1) peek becomes a debate. Thrashing, in the strict sense.</p>
+<p>TBH one person CAN hold both at small scale, the way one core runs two threads as long as
+it stays a Capacity statement<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>, not an Identity statement<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</p>
+<hr />
+<p>The backlog is a prioritised, ordered queue — a claim about an abstract data type, which says nothing about cost.</p>
+<hr />
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>My first job involved a day of photocopying which I finished in two hours out of sheer boredom. I have not since encountered a task so thoroughly IO-bound, nor a person so thoroughly blocked on one.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Productive as they might be, with the advent of the virtuous AI pair programmer, this layer of work is seriously threatened for the wrong reasons!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>You could of course argue that Associates might lean more towards tasks than threads.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>a.k.a GPT Engineers, as the Co-Founder of a Cloud Solutions outfit I recently met with, fondly calls them.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>A very polarising topic, deliberately sitting this one out.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Or crypto, in all its flavours perhaps.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>In my experience, the younger the PM in age, the more it becomes an identity statement!<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>TBH There is a special circle of hell reserved for whoever first wrote “Product Manager / Product Owner” with a slash in the middle. That slash is doing a truly heroic amount of work, in the way “and/or” does heroic work in a prenuptial agreement.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+  <nav class="series-nav">
+    <a class="prev" href="/writing/scrum-engineering/">Series index</a>
+    <a class="next" href="/writing/scrum-engineering/tools/">Part II — The Tools</a>
+  </nav>
+
+  <footer>
+    <a href="mailto:abhinav@prkhya.com">abhinav@prkhya.com</a>
+    <a href="https://linkedin.com/in/kryochronic">LinkedIn</a>
+    <a href="https://github.com/kryochronic">GitHub</a>
+    <p class="colophon">Prkhya · New Delhi, India</p>
+  </footer>
+
+</div>
+</body>
+</html>
