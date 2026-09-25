@@ -86,7 +86,7 @@ Why “work harder™<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-n
 <h3 id="the-shape-that-actually-matters">The shape that actually matters</h3>
 <p>The figures below are illustrative. They are manufactured to the shape the instrument showed, because the originals belong to a former employer; the numbers are invented, the shape and the mechanism are the claim.</p>
 <figure>
-<img src="img/created-vs-resolved.svg" alt="An example CVR" />
+<img src="../img/created-vs-resolved.svg" alt="An example CVR" />
 <figcaption aria-hidden="true">An example CVR</figcaption>
 </figure>
 <table>
@@ -170,7 +170,7 @@ Why “work harder™<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-n
 </tbody>
 </table>
 <figure>
-<img src="img/control-chart.svg" alt="Cycle time per issue — eight months (illustrative)" />
+<img src="../img/control-chart.svg" alt="Cycle time per issue — eight months (illustrative)" />
 <figcaption aria-hidden="true">Cycle time per issue — eight months (illustrative)</figcaption>
 </figure>
 <p>1,600 issues, arriving at about seven a day. Nearly nine in ten close inside a day, so the rolling average sits near a day and a half and every summary built on the mean reports a healthy system. The bottom three percent never close at all. Forty-eight issues with no completion date do not have a long cycle time – they have an undefined one, and a class of work whose <em>W</em> is unbounded has <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> ≥ 1 all by itself, inside an organisation whose aggregate looks fine.</p>
@@ -182,8 +182,10 @@ Why “work harder™<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-n
 <p>The measurements of the Sprints the “Velocity<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>” <em>š</em>, the Estimates ( Story Points<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> / Effort, what ever is your flavour<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> ) when recorded on the Issues enable an empirically measured quantity, say <em>ê</em>, which is now a measure of what is the error in the originals by the humans recording the ‘Estimates’.</p>
 <p>Epics as a decomposition tree – the breakdown makes items estimable and, more importantly, exposes work that can’t justify itself once it is named. For example an Epic titled “UI improvements” is vague, but when broken down into specific stories like say “Add Loader post Submit” or “Capability to Add Discount Schemes to an Item”, work will either pop-up as <em>justified</em> or “Sales asked this last year → <em>junk</em>”.</p>
 <p>Estimated and properly assorted Backlog will allow us to see an Epic / Version Report which forecasts a release date from observed <em>ê</em>, rather than PjMs plotting a Gantt chart creatively and expecting the Engineering to “work harder™”</p>
-<p><img src="img/example-epic-burndown.png" alt="An Example of the Empirical Prediction" />
-An Example of the Empirical Prediction in JIRA</p>
+<figure>
+<img src="../img/example-epic-burndown.png" alt="An example of the empirical prediction in JIRA" />
+<figcaption aria-hidden="true">An example of the empirical prediction in JIRA</figcaption>
+</figure>
 <p>Of course it forecasts a <em>distribution</em> ( completion is likely in a certain number of Sprints ), not a date. A forecast defensible with observed throughput is a categorically different object from a date negotiated<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> in a room – and the difference shows the moment it slips.</p>
 <p>Therefore <em>š</em> is empirically measured, not a target. The moment it becomes a target it stops measuring anything. Any observed values of <em>š</em> is in the right direction when <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> → 0, or in that direction. <em>š</em> measures motion( a.k.a amplitude ), <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> measures direction, <em>ê</em> measures quality of estimations, derived via the balance between Committed vs Delivered in a typical “Velocity Chart”.</p>
 <p>Combine <em>š</em> and <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> and you get the true vector<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>: Velocity. That is the difference between random motion and progress. Drive ê → 0 and the band narrows until the promise is worth making<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>.</p>
