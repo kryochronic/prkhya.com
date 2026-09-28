@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Scrum–Engineering Model</title>
-<meta name="description" content="Actors, Tools, Process, Storm. A series on why an org drowning in on-call is an org in an interrupt storm — and what fixed it.">
-<meta property="og:title" content="The Scrum–Engineering Model">
-<meta property="og:description" content="Actors, Tools, Process, Storm. A series on why an org drowning in on-call is an org in an interrupt storm — and what fixed it.">
+<title>Always Booked, Always Behind — The Scrum–Engineering Model</title>
+<meta name="description" content="Actors, Tools, Process, Storm. A series on why an organisation drowning in on-call is in an interrupt storm — and what fixed it.">
+<meta property="og:title" content="Always Booked, Always Behind: why your engineering team feels slow even when everyone is busy">
+<meta property="og:description" content="Actors, Tools, Process, Storm. A series on why an organisation drowning in on-call is in an interrupt storm — and what fixed it.">
 <meta property="og:type" content="article">
 <link rel="stylesheet" href="/style.css">
 </head>
@@ -16,54 +16,46 @@
   <a class="backlink" href="/writing/">← Writing</a>
 
   <header>
-    <p class="part-label">Engineering organisations as systems</p>
-    <h1>The Scrum–Engineering Model</h1>
-    <p class="lede">Actors → Tools → Process → Storm</p>
+    <p class="part-label">The Scrum–Engineering Model</p>
+    <h1>Always Booked, Always Behind</h1>
+    <p class="lede">Measure · Fix · Hold</p>
   </header>
 
+<p>If you run an engineering organisation that is fully occupied and still permanently late, this series is about why, and what to do about it.</p>
+<p>The problem is not effort. It is scheduling: work arrives, competes for finite capacity, and has to be ordered. That is the problem an operating system solves, and computer science has spent fifty years on it. The abstractions transfer — not because an organisation resembles a computer, but because both are systems where arrival, capacity and ordering decide the outcome.</p>
+<p>And you don’t have to stop the fire to do it. The method isn’t the church of Agile — no hundred ceremonies, no clergy of titled roles. Its minimum is a handful of measurements your tracker already records. It runs inside the tactical hell you’re already in, and as a by-product produces the strategic roadmap, along with the evidence that it works.</p>
+<p>By the end of the four parts you will be able to tell whether a delivery problem is a capacity problem or a scheduling one, read the two charts that distinguish them, and recognise the interventions that lower the arrival rate rather than raising the effort.</p>
+<p>Where I did this, on-call volume went from roughly six thousand issues a year to roughly six hundred, and nine months of planned delivery landed in three.</p>
 <blockquote>
-<p>An org drowning in on-call is an org in an interrupt storm. A team planning execution nine months ahead is a team whose working set doesn’t fit in cache.
-<strong>Both are scheduling failures. Both come out of the org budget.</strong></p>
+<p>An organisation drowning in on-call is an organisation in an interrupt storm. A team planning execution nine months ahead is a team whose working set doesn’t fit in cache.
+<strong>Both are scheduling failures. Both come out of the same budget.</strong></p>
 </blockquote>
-<p>A system consistently averaging <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>90</mn><mi>%</mi><mo>+</mo></mrow><annotation encoding="application/x-tex">90\%+</annotation></semantics></math></em> utilisation is a system with little headroom and rapidly rising latency. Engineering organisations invariably get their prioritisation wrong and ship ad hoc — get it out first and fix it later<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> — in the name of a dynamic<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> work culture.</p>
-<p>Capacity that is somehow both fully utilised and permanently behind is a conundrum faced by organisations large and small. “work harder™” doesn’t make this better. It makes it worse. If utilisation is consistently <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mn>100</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">≥ 100\%</annotation></semantics></math></em>, bad things may happen™.</p>
-<p>Computer science has spent fifty years on versions of this problem, and the fundamentals transfer. Organisations and leaders can either just work harder™ and wither, or apply the basics and weather this storm. Where I did it, on-call volume went from roughly six thousand issues a year to roughly six hundred. But the tools and the measurements<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> have to exist first<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, which is where this starts.</p>
-<h2 id="the-parts">The parts</h2>
-<ul class="series-toc">
-<li>
-<span class="part">Part I</span>
-<a href="/writing/scrum-engineering/actors/">The Actors</a>
-<span class="blurb">Who — and what is each good for? Taxonomy, and the two dogmas.</span>
-</li>
-<li>
-<span class="part">Part II</span>
-<a href="/writing/scrum-engineering/tools/">The Tools</a>
-<span class="blurb">With what — where does the queue actually live? The JIRA rehabilitation.</span>
-</li>
-<li>
-<span class="part">Part III</span>
-<a href="/writing/scrum-engineering/process/">The Process</a>
-<span class="blurb">How — ticks, batch size, bounded lookahead. Nine months of plan delivered in three.</span>
-</li>
-<li>
-<span class="part">Part IV</span>
-<a href="/writing/scrum-engineering/storm/">The Storm</a>
-<span class="blurb">Interrupts — two queues, top and bottom halves. Six thousand on-calls a year into six hundred.</span>
-</li>
-</ul>
+<h2 id="the-short-version">The short version</h2>
+<p><strong>Before anything, agree who sets policy and who runs mechanism.</strong> A product manager decides what matters; a product owner decides what goes next. Fuse the two and every scheduling decision reopens the strategy question.</p>
+<p>These are roles, not job titles. I’ve seen engineering teams nominally led by their product manager — run as a kind of mini-CEO, and on paper the product owner too. It’s an anti-pattern: many of those PMs were associates, paired with engineering managers carrying ten years or more. The product-owner work got done anyway, quietly, by the seasoned EM.</p>
+<p>→ <a href="/writing/scrum-engineering/actors/">Part I, The Actors</a></p>
+<h3 id="measure">1 · Measure</h3>
+<p><strong>Look at</strong> the Created-vs-Resolved chart, the Control Chart, and the depth of the standing queue. The Control Chart matters most: it is the one instrument nobody can produce the night before.</p>
+<p><strong>It tells you</strong> <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><mi>λ</mi><mi>/</mi><mi>μ</mi></mrow><annotation encoding="application/x-tex">\rho = \lambda / \mu</annotation></semantics></math></em>. At <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> ≥ 1 the queue grows without bound, whatever anyone does.</p>
+<p><strong>Red flag:</strong> created and resolved lines that track each other. It looks like a team keeping up. It is a system parked at <em><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math></em> = 1, with a queue that never drains.</p>
+<p>→ <a href="/writing/scrum-engineering/tools/">Part II, The Tools</a></p>
+<h3 id="fix-raise-the-service-rate">2 · Fix — raise the service rate</h3>
+<p>Interrupt work and planned work get separate queues and separate schedulers. Reduce the batch, shorten the loop, bound the lookahead, and let the timer — not the task — decide when work yields.</p>
+<p><strong>You will see</strong> the slope reverse inside a quarter. The slope, not the queue: it is the earlier signal and by far the more informative one.</p>
+<p>→ <a href="/writing/scrum-engineering/process/">Part III, The Process</a>, and the first half of <a href="/writing/scrum-engineering/storm/">Part IV</a></p>
+<h3 id="hold-lower-the-arrival-rate">3 · Hold — lower the arrival rate</h3>
+<p>Every incident gets two fixes: restore service now, and make that class of failure stop arriving. The second is deferred to scheduled context — which is what a separate on-call scrum is actually for.</p>
+<p>Almost nobody reaches this phase, and it is the only reason the number stays down. Fixing only buys the right to attempt it.</p>
+<p>→ <a href="/writing/scrum-engineering/storm/">Part IV, The Storm</a></p>
+<h2 id="why-it-usually-doesnt-happen">Why it usually doesn’t happen</h2>
+<p>It isn’t for want of literature. Queueing theory, Little’s Law, lean flow, the Theory of Constraints — the problem is close to universal, virtually every engineering organisation meets it, and the fixes have been in print for decades. The theory in this series isn’t new.</p>
+<p>What is hard is seeing it from where you’re standing. Inside a tactical hell the 10,000-foot view is surprisingly difficult to get: the people who could spot the pattern are the ones answering the pager. So organisations do the locally rational thing — ship ad hoc, get it out first and fix it later<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, and call the whole arrangement a dynamic work culture. Capacity ends up both fully utilised and permanently behind, and gets told to “work harder™”. But a system averaging 90%+ utilisation has little headroom and rapidly rising latency, and at ≥ 100% the queue does not converge at all.</p>
+<p>That is what the method does from inside the fire. The instruments give you the 10,000-foot view the pager never will, and the classes of failure you remove one at a time become the roadmap, each one working evidence that the method holds.</p>
+<p>Organisations can either work harder and wither, or apply the basics and weather the storm. But the tools and the measurements have to exist first — one CTO I worked with complained constantly that work never got done, and was himself the highest-priority interrupt in every sprint — which is why measurement comes first.</p>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>And also call it “CI/CD”.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>A phenomenon much more taxing on an average organisation than on computers.<br />
-Backtrace:<br />
-→ Morning coffee<br />
-→ Start<br />
-→ Take 4 hours to get to a productive 15 minutes<br />
-→ Switch work stream after 5 ( minutes )<br />
-→ Rinse and repeat.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>The CTO of a startup I consulted with chronically complained about how work never gets done. He was apparently the highest priority interrupt in every Sprint.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>So that the CXOs can measure how much they interrupt themselves.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>And also call it CI/CD.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
