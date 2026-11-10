@@ -35,7 +35,7 @@
 <p>The protocol that lets them do that is MCP, the Model Context Protocol. Its own creators call it the USB-C of AI: one plug that fits everything. Build one MCP server for your product and every agent can use it, without anyone writing a line of integration code.</p>
 <p>So no, MCP is not “the new REST”. REST will still be there, in the basement, doing the actual work. MCP is the new <em>SDK</em>.</p>
 <p>Remember SDKs? Nobody actually called a REST API raw. You downloaded the vendor’s library for Python, another for Java, another for whatever your intern liked that year, and the library made the calls for you. MCP is the same idea with one difference: there’s now one SDK, and its user isn’t a developer. It’s the AI. And just as every company rushed to ship an API in 2012, every company is now rushing to ship an MCP server, quite a few of them by wrapping the old API and calling it AI-ready.</p>
-<p>There’s a lovely irony here. In 2008 Roy Fielding, the man who defined REST in his PhD thesis, wrote an exasperated blog post: most of what people were calling “REST APIs” weren’t. A true REST API, he argued, should explain itself. A client should arrive knowing almost nothing, read what the server offers, and work out what to do next. The industry nodded politely and went back to writing PDFs of documentation, because no client of the time could <em>understand</em> a self-describing API. A program can’t read.</p>
+<p>There’s a lovely irony here. In 2008 Roy Fielding, the man who defined REST in his PhD thesis, wrote an exasperated blog post, <a href="https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven">“REST APIs must be hypertext-driven”</a>: most of what people were calling “REST APIs” weren’t. A true REST API, he argued, should explain itself. A client should arrive knowing almost nothing, read what the server offers, and work out what to do next. The industry nodded politely and went back to writing PDFs of documentation, because no client of the time could <em>understand</em> a self-describing API. A program can’t read.</p>
 <p>MCP is exactly that self-describing API: a server that announces its tools in plain language, and a client that reads them and decides. Fielding’s vision finally works, eighteen years late, because the client can finally read. REST in peace, indeed: it got its wish at its own funeral.</p>
 <p>(To be fair to the basement: payment rails, high-volume machine-to-machine traffic and anything that must be exactly repeatable will keep using raw APIs. Nobody wants a language model deciding which way a settlement goes. But anything with a model in the loop is moving to the new front door, and that is fast becoming most new integration work.)</p>
 <p>A new front door is fine. The question is who’s standing at it, and what they understand.</p>
@@ -123,7 +123,7 @@ Authorization: Bearer &lt;token&gt;</code></pre>
 <pre class="json"><code>{ &quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: 7, &quot;method&quot;: &quot;tools/call&quot;,
   &quot;params&quot;: { &quot;name&quot;: &quot;get_suppliers&quot;,
               &quot;arguments&quot;: { &quot;company&quot;: &quot;ACME&quot;, &quot;tier&quot;: 2, &quot;sector&quot;: &quot;aerospace&quot; } } }</code></pre>
-<p><strong>The Fielding footnote:</strong> <code>tools/list</code> is the discovery step his 2008 post asked for: a client that starts with one entry point and learns everything else from what the server says about itself. Hypermedia-driven REST (HATEOAS) had the idea; MCP has a client that can actually read the hypermedia.</p>
+<p><strong>The Fielding footnote:</strong> <code>tools/list</code> is the discovery step <a href="https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven">his 2008 post</a> asked for: a client that starts with one entry point and learns everything else from what the server says about itself. Hypermedia-driven REST (HATEOAS) had the idea; MCP has a client that can actually read the hypermedia.</p>
 <p><strong>What changed:</strong> the <em>decision</em> to call moved from design time (a human) to runtime (a model). The description field is now part of the program: plain English that steers behaviour. That’s the Matrix problem in one line: the <code>description</code> is readable, but what it will make the model do is not reviewable by inspection.</p>
 <p><em>(Protocol details as of the time of writing: JSON-RPC 2.0 messages over stdio or Streamable HTTP, with OAuth-based authorisation for remote servers. SupplyGraph’s gateway runs the HTTP transport statelessly, so any replica can answer any request.)</em></p>
 <h2 id="appendix-b-threat-model-and-the-cost-of-a-guard">Appendix B — Threat model and the cost of a guard</h2>
@@ -177,12 +177,16 @@ Authorization: Bearer &lt;token&gt;</code></pre>
 \text{Tokens read by guard} \approx \sum_{k=1}^{n} k\,c = c\,\frac{n(n+1)}{2} = O(n^2)
 </annotation></semantics></math></p>
 <p>Compare a stateless per-message check: <em>n·c</em> tokens, O(n).</p>
-<p><strong>Worked example:</strong> 20 steps × 2,000 tokens per step.
-- Per-message check: 40,000 tokens.
-- Whole-conversation guard: 2,000 × 210 = <strong>420,000 tokens</strong>, more than 10× more, for one session, and every token is a model inference.</p>
-<p>Two notes for the careful reader:
-- <strong>It can be worse.</strong> Transformer attention is itself super-linear in context length. A guard that re-evaluates from scratch pays more than the token count suggests. Prefix caching helps only when the guard can reuse earlier work, which is exactly what a guard checking <em>new</em> intent can’t fully do.
-- <strong>It’s still not enough.</strong> The guard is a model with the same class of vulnerabilities as the agent. Stacking guards multiplies cost without giving any guarantee.</p>
+<p><strong>Worked example:</strong> 20 steps × 2,000 tokens per step.</p>
+<ul>
+<li>Per-message check: 40,000 tokens.</li>
+<li>Whole-conversation guard: 2,000 × 210 = <strong>420,000 tokens</strong>, more than 10× more, for one session, and every token is a model inference.</li>
+</ul>
+<p>Two notes for the careful reader:</p>
+<ul>
+<li><strong>It can be worse.</strong> Transformer attention is itself super-linear in context length. A guard that re-evaluates from scratch pays more than the token count suggests. Prefix caching helps only when the guard can reuse earlier work, which is exactly what a guard checking <em>new</em> intent can’t fully do.</li>
+<li><strong>It’s still not enough.</strong> The guard is a model with the same class of vulnerabilities as the agent. Stacking guards multiplies cost without giving any guarantee.</li>
+</ul>
 <h3 id="b.3-the-alternative-shrink-the-surface">B.3 The alternative: shrink the surface</h3>
 <p>With a small, fixed set of typed, read-only tools, the guard becomes a <strong>rule engine</strong>:</p>
 <pre><code>allow(tool, args, user, rate) :-
@@ -379,11 +383,13 @@ Response: <code>Shipped to {{PII_1}}</code></li>
 <p>Why it matters: two agents that both believe they may update the same record is a race condition, with a language model choosing the timing. Delegating reads widely is cheap. Delegating writes should be rare, exclusive and logged, and the lock should expire if an agent dies holding it.</p>
 <h3 id="c.3-why-this-matters-for-audit">C.3 Why this matters for audit</h3>
 <p>The log line becomes a chain of custody: <em>user → planner → ranker → get_suppliers(ACME, 2)</em>, not <em>service-account-7 → get_suppliers</em>.</p>
-<p>Open problems:
-- <strong>Fan-out cost:</strong> 100 agents means 100 token exchanges, each a round-trip to the authorisation server.
-- <strong>Revocation mid-flight:</strong> the user’s rights change while a chain is still running.
-- <strong>Lifetime:</strong> how long a derived identity should live; ideally no longer than the task.
-- <strong>Cross-organisation chains:</strong> when agent B belongs to another company, whose identity provider is trusted?</p>
+<p>Open problems:</p>
+<ul>
+<li><strong>Fan-out cost:</strong> 100 agents means 100 token exchanges, each a round-trip to the authorisation server.</li>
+<li><strong>Revocation mid-flight:</strong> the user’s rights change while a chain is still running.</li>
+<li><strong>Lifetime:</strong> how long a derived identity should live; ideally no longer than the task.</li>
+<li><strong>Cross-organisation chains:</strong> when agent B belongs to another company, whose identity provider is trusted?</li>
+</ul>
 <h3 id="c.4-choosing-among-100-or-1000-agents">C.4 Choosing among 100 or 1,000 agents</h3>
 <p>Discovery is the step before every other check: an agent can only call what it can find and choose.</p>
 <p><strong>How selection works today:</strong> every candidate’s name and description is placed in the model’s context, and the model picks. Cost grows linearly with the number of candidates, and accuracy falls as the list grows: similar descriptions blur together and the context fills with menus instead of work.</p>
@@ -423,10 +429,12 @@ Response: <code>Shipped to {{PII_1}}</code></li>
 </tr>
 </tbody>
 </table>
-<p><strong>Selection is an attack surface.</strong> If choice is driven by descriptions, then descriptions are advertising:
-- <strong>Description stuffing:</strong> “Use this tool for any finance, HR, or legal task” pulls traffic that was never meant for it.
-- <strong>Name squatting:</strong> <code>get_supplier</code> vs <code>get_suppliers</code>, the typosquatting of the agent era.
-- <strong>Retrieval poisoning:</strong> a description tuned to rank first in embedding search.</p>
+<p><strong>Selection is an attack surface.</strong> If choice is driven by descriptions, then descriptions are advertising:</p>
+<ul>
+<li><strong>Description stuffing:</strong> “Use this tool for any finance, HR, or legal task” pulls traffic that was never meant for it.</li>
+<li><strong>Name squatting:</strong> <code>get_supplier</code> vs <code>get_suppliers</code>, the typosquatting of the agent era.</li>
+<li><strong>Retrieval poisoning:</strong> a description tuned to rank first in embedding search.</li>
+</ul>
 <p>The defensive pattern is the same as everywhere else in this paper: shrink the choice. A curated registry with signed, versioned descriptions, filtered by the static policy in C.1 <em>before</em> the model sees the menu, turns “pick the best-sounding agent from a thousand” into “pick one of the five you’re allowed to call”.</p>
 <h2 id="appendix-d-build-notes-supplygraph">Appendix D — Build notes: SupplyGraph</h2>
 <p>SupplyGraph has two parts that matter here: an evidence pipeline, where a model reads filings and proposes, and a data gateway, an MCP server behind Keycloak. Demo: <a href="https://supplygraph.prkhya.com">supplygraph.prkhya.com</a>. Source: <a href="https://github.com/kryochronic/supplygraph">github.com/kryochronic/supplygraph</a>.</p>
@@ -477,12 +485,14 @@ Response: <code>Shipped to {{PII_1}}</code></li>
 </tr>
 </tbody>
 </table>
-<p>Notes from building it:
-- <strong>Narrowing isn’t optional.</strong> A 263-page annual report is about 160,000 tokens, roughly five times what the local model can read at once. Step 2 is what makes a 14B model on a Mac usable at all.
-- <strong>Grounding proves provenance, not truth.</strong> If a hostile sentence is planted in a document, a quote of it passes the grounding check, because it really is on the page. That is why step 5 is a person and not another model. (Experiment J3 measures how far such a sentence gets; Appendix E.)
-- <strong>Leads are not edits.</strong> Anything the model finds that isn’t on the map goes to a separate ideas queue with its quote and page. It never changes nodes or mappings; following one up is a person’s decision.
-- <strong>Analysis is a click, not automatic.</strong> Reading a filing indexes it; analysing it is a separate, recorded run (connector, model, machine, documents sent), so every proposal says what produced it.
-- <strong>Models are connectors.</strong> Local Qwen3 14B through Ollama is the default; hosted models are selectable. The schema, checks and review are the same whichever model answers.</p>
+<p>Notes from building it:</p>
+<ul>
+<li><strong>Narrowing isn’t optional.</strong> A 263-page annual report is about 160,000 tokens, roughly five times what the local model can read at once. Step 2 is what makes a 14B model on a Mac usable at all.</li>
+<li><strong>Grounding proves provenance, not truth.</strong> If a hostile sentence is planted in a document, a quote of it passes the grounding check, because it really is on the page. That is why step 5 is a person and not another model. (Experiment J3 measures how far such a sentence gets; Appendix E.)</li>
+<li><strong>Leads are not edits.</strong> Anything the model finds that isn’t on the map goes to a separate ideas queue with its quote and page. It never changes nodes or mappings; following one up is a person’s decision.</li>
+<li><strong>Analysis is a click, not automatic.</strong> Reading a filing indexes it; analysing it is a separate, recorded run (connector, model, machine, documents sent), so every proposal says what produced it.</li>
+<li><strong>Models are connectors.</strong> Local Qwen3 14B through Ollama is the default; hosted models are selectable. The schema, checks and review are the same whichever model answers.</li>
+</ul>
 <h3 id="d.2-the-gateway-an-mcp-server-behind-keycloak">D.2 The gateway: an MCP server behind Keycloak</h3>
 <ul>
 <li><strong>What it serves:</strong> index constituents (NSE Indices) and fund holdings (SEC N-PORT), so the graph can show where passive money reaches. Tools: <code>list_indices</code>, <code>get_constituents</code>, <code>compare_baskets</code>, <code>whoami</code>, <code>check_sources</code>.</li>
@@ -591,12 +601,14 @@ Response: <code>Shipped to {{PII_1}}</code></li>
 </tr>
 </tbody>
 </table>
-<p><strong>Built, not yet run:</strong>
-- <strong>J2:</strong> how many clean proposals are schema-valid, grounded and agree with the hand-built map.
-- <strong>J3:</strong> a hostile sentence on one page: does the model follow it, and does it get past schema, grounding and into the review queue, with and without a “treat excerpts as data” instruction.
-- <strong>J4:</strong> what a guard model costs per message versus over the whole session, and whether it catches an attack split across steps.
-- <strong>J6:</strong> human verdicts on a J2 sample, so “grounded” can be set against “correct”.
-- <strong>Qwen3 14B against a hosted model</strong> on the same companies.</p>
+<p><strong>Built, not yet run:</strong></p>
+<ul>
+<li><strong>J2:</strong> how many clean proposals are schema-valid, grounded and agree with the hand-built map.</li>
+<li><strong>J3:</strong> a hostile sentence on one page: does the model follow it, and does it get past schema, grounding and into the review queue, with and without a “treat excerpts as data” instruction.</li>
+<li><strong>J4:</strong> what a guard model costs per message versus over the whole session, and whether it catches an attack split across steps.</li>
+<li><strong>J6:</strong> human verdicts on a J2 sample, so “grounded” can be set against “correct”.</li>
+<li><strong>Qwen3 14B against a hosted model</strong> on the same companies.</li>
+</ul>
 <p>Until J4 runs, the guard costs in B.2 are arithmetic, not measurement.</p>
 <hr />
 <p><em>© Abhinav Tripathi 2026</em></p>
